@@ -1,0 +1,55 @@
+{
+    "task": "SubtaskA",
+    "track": "monolingual",
+    "submission_format": "csv",
+    "model": "statistics_cnn_1d",
+    "data": {
+        "dataset_type": "neural_network_statistics_dataset",
+        "dataset_type_settings": {
+
+        },
+        "data_dir": "./data/statistical_data",
+        "label_column": "label",
+        "max_len": 50,
+        "batch_size": 128,
+        "test_size": 0.2,
+        "preprocess_text_level": 0
+    },
+    "model_config": {
+        "out_size": 1,
+        "dropout_p": 0.5,
+        "conv_blocks": [
+            {
+                "conv1d": {
+                    "in_channels": 1,
+                    "out_channels": 4,
+                    "kernel_size": 2
+                },
+                "max_pool_1d": {
+                    "kernel_size": 2
+                }
+            }
+        ],
+        "fc": [
+            8
+        ],
+        "out_activation": "sigmoid"
+    },
+    "training": {
+        "num_epochs": 15,
+        "num_epochs_before_finetune": 3,
+        "optimizer": {
+            "SGD": {
+                "freeze_lr": 1e-3,
+                "finetune_lr": 2e-5,
+                "momentum": 0.9,
+                "weight_decay": 1e-4
+            }
+        },
+        "scheduler": {
+            "num_warmup_steps": 0
+        },
+        "loss": "bce",
+        "metric": "accuracy"
+    }
+}

@@ -1,0 +1,54 @@
+{
+    "task": "SubtaskA",
+    "track": "monolingual",
+    "submission_format": "csv",
+    "model": "hierarchical_bert",
+    "tokenizer": {
+        "model_name": "bert",
+        "pretrained_name": "bert-base-cased"
+    },
+    "data": {
+        "dataset_type": "transformer_hierarchical_dataset",
+        "dataset_type_settings": {
+            "truncate_documents": 1,
+            "max_document_len": 512,
+            "max_len": 256,
+            "chunk_size": 256,
+            "stride": 256,
+            "min_chunk_size": 256
+        },
+        "data_dir": "./data/original_data",
+        "label_column": "label",
+        "max_len": 256,
+        "batch_size": 32,
+        "test_size": 0.2,
+        "preprocess_text_level": 0
+    },
+    "model_config": {
+        "pretrained_model_name": "bert-base-cased",
+        "out_size": 1,
+        "dropout_p": 0.5,
+        "selected_layers": [-1],
+        "selected_layers_merge_strategy": "concatenate",
+        "fc": [
+            128
+        ],
+        "out_activation": "sigmoid",
+        "pooling_strategy": "mean"
+    },
+    "training": {
+        "num_epochs": 4,
+        "num_epochs_before_finetune": 2,
+        "optimizer": {
+            "AdamW": {
+                "freeze_lr": 1e-3,
+                "finetune_lr": 2e-5
+            }
+        },
+        "scheduler": {
+            "num_warmup_steps": 50
+        },
+        "loss": "bce",
+        "metric": "accuracy"
+    }
+}

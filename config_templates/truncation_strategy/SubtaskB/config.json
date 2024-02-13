@@ -1,0 +1,48 @@
+{
+    "task": "SubtaskB",
+    "submission_format": "csv",
+    "model": "bert",
+    "tokenizer": {
+        "model_name": "bert",
+        "pretrained_name": "bert-base-uncased"
+    },
+    "data": {
+        "dataset_type": "transformer_truncation_dataset",
+        "dataset_type_settings": {
+            "truncation_strategy": "head_only"
+        },
+        "data_dir": "./data/original_data",
+        "label_column": "label",
+        "max_len": 128,
+        "batch_size": 4,
+        "test_size": 0.2,
+        "preprocess_text_level": 0
+    },
+    "model_config": {
+        "pretrained_model_name": "bert-base-uncased",
+        "out_size": 6,
+        "dropout_p": 0.5,
+        "fc": [
+            128
+        ]
+    },
+    "training": {
+        "num_epochs": 3,
+        "num_epochs_before_finetune": 1,
+        "optimizer": {
+            "AdamW": {
+                "freeze_lr": 1e-3,
+                "finetune_lr": 2e-5
+            }
+        },
+        "scheduler": {
+            "num_warmup_steps": 0
+        },
+        "early_stopping": {
+            "patience": 2,
+            "delta": 1e-3
+        },
+        "loss": "cross_entropy",
+        "metric": "accuracy"
+    }
+}

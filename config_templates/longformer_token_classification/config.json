@@ -1,0 +1,47 @@
+{
+    "task": "SubtaskC",
+    "submission_format": "csv",
+    "model": "longformer",
+    "tokenizer": {
+        "model_name": "longformer",
+        "pretrained_name": "allenai/longformer-base-4096"
+    },
+    "data": {
+        "dataset_type": "longformer_token_classification_dataset",
+        "dataset_type_settings": {
+
+        },
+        "data_dir": "./data/original_data",
+        "label_column": "label",
+        "max_len": 1024,
+        "batch_size": 32,
+        "test_size": 0.2,
+        "preprocess_text_level": 0
+    },
+    "model_config": {
+        "pretrained_model_name": "allenai/longformer-base-4096",
+        "out_size": 2,
+        "dropout_p": 0.2,
+        "fc": [128],
+        "finetune_last_transformer_layers": 1
+    },
+    "training": {
+        "num_epochs": 3,
+        "num_epochs_before_finetune": 0,
+        "optimizer": {
+            "AdamW": {
+                "freeze_lr": 1e-3,
+                "finetune_lr": 1e-3
+            }
+        },
+        "scheduler": {
+            "num_warmup_steps": 0
+        },
+        "early_stopping": {
+            "patience": 1,
+            "delta": 1e-3
+        },
+        "loss": "cross_entropy",
+        "metric": "mae"
+    }
+}

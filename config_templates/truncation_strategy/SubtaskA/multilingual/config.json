@@ -1,0 +1,47 @@
+{
+    "task": "SubtaskA",
+    "track": "multilingual",
+    "submission_format": "csv",
+    "model": "bert",
+    "tokenizer": {
+        "model_name": "bert",
+        "pretrained_name": "bert-base-multilingual-cased"
+    },
+    "data": {
+        "dataset_type": "transformer_truncation_dataset",
+        "dataset_type_settings": {
+            "truncation_strategy": "head_only"
+        },
+        "data_dir": "./data/original_data",
+        "label_column": "label",
+        "max_len": 128,
+        "batch_size": 16,
+        "test_size": 0.2,
+        "preprocess_text_level": 0
+    },
+    "model_config": {
+        "pretrained_model_name": "bert-base-multilingual-cased",
+        "out_size": 1,
+        "dropout_p": 0.5,
+        "fc": [
+            128
+        ],
+        "out_activation": "sigmoid",
+        "reinit_last_n_layers": 4
+    },
+    "training": {
+        "num_epochs": 2,
+        "num_epochs_before_finetune": 0,
+        "optimizer": {
+            "AdamW": {
+                "freeze_lr": 1e-3,
+                "finetune_lr": 2e-5
+            }
+        },
+        "scheduler": {
+            "num_warmup_steps": 50
+        },
+        "loss": "bce",
+        "metric": "accuracy"
+    }
+}

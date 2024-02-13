@@ -1,0 +1,51 @@
+{
+    "task": "SubtaskA",
+    "track": "monolingual",
+    "submission_format": "csv",
+    "model": "deberta",
+    "tokenizer": {
+        "model_name": "deberta",
+        "pretrained_name": "microsoft/deberta-v3-large"
+    },
+    "data": {
+        "dataset_type": "transformer_truncation_dataset",
+        "dataset_type_settings": {
+            "truncation_strategy": "head_only"
+        },
+        "data_dir": "./data/combined_data",
+        "label_column": "label",
+        "max_len": 512,
+        "batch_size": 32,
+        "preprocess_text_level": 0,
+        "test_size": 0.2
+    },
+    "model_config": {
+        "pretrained_model_name": "microsoft/deberta-v3-large",
+        "out_size": 1,
+        "dropout_p": 0.5,
+        "fc": [
+            128
+        ],
+        "out_activation": "sigmoid",
+        "selected_layers": [
+            -1
+        ],
+        "selected_layers_merge_strategy": "concatenate",
+        "selected_layers_dropout_p": 0.2
+    },
+    "training": {
+        "num_epochs": 4,
+        "num_epochs_before_finetune": 3,
+        "optimizer": {
+            "AdamW": {
+                "freeze_lr": 0.001,
+                "finetune_lr": 0.0002
+            }
+        },
+        "scheduler": {
+            "num_warmup_steps": 50
+        },
+        "loss": "bce",
+        "metric": "accuracy"
+    }
+}

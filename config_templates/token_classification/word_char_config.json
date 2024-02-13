@@ -1,0 +1,62 @@
+{
+    "task": "SubtaskC",
+    "submission_format": "csv",
+    "model": "char_word_bilstm_for_token_classification",
+    "tokenizer": {
+        "model_name": "longformer",
+        "pretrained_name": "allenai/longformer-base-4096"
+    },
+    "data": {
+        "dataset_type": "token_classification_dataset",
+        "dataset_type_settings": {
+            "words": {
+                "max_len": 1024
+            },
+            "chars": {
+                "max_len": 25
+            }
+        },
+        "data_dir": "./data/original_data",
+        "label_column": "label",
+        "max_len": 1024,
+        "char_max_len": 25,
+        "batch_size": 16,
+        "test_size": 0.2,
+        "preprocess_text_level": 0
+    },
+    "model_config": {
+        "char_vocab_size": -1,
+        "char_max_len": -1,
+        "char_embedding_dim": 32,
+        "char_kernel_size": 3,
+        "char_out_size": 50,
+        "word_vocab_size": -1,
+        "word_embedding_dim": 50,
+        "out_size": 2,
+        "dropout_p": 0.6,
+        "n_layers": 1,
+        "hidden_dim": 32,
+        "fc": [
+            16
+        ]
+    },
+    "training": {
+        "num_epochs": 1,
+        "num_epochs_before_finetune": 1,
+        "optimizer": {
+            "AdamW": {
+                "freeze_lr": 1e-3,
+                "finetune_lr": 1e-4
+            }
+        },
+        "early_stopping": {
+            "patience": 10,
+            "delta": 1e-4
+        },
+        "scheduler": {
+            "num_warmup_steps": 50
+        },
+        "loss": "cross_entropy",
+        "metric": "mae"
+    }
+}
